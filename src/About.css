@@ -1,0 +1,130 @@
+/* About Page Styles */
+.about-page {
+    color: #f7f6f5;
+    padding: 20px;
+    background-image: url('C:/SEM-5/Database_Manage/hopelleton-frontend/public/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  .hero-section h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .hero-section p {
+    font-size: 1.5em;
+  }
+  
+  /* Feature Section */
+  .feature-section {
+    display: flex;
+    justify-content: space-around;
+    margin: 60px 0;
+    gap: 20px;
+  }
+  
+  .feature {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 1.5s ease forwards;
+  }
+  
+  .feature:hover {
+    transform: translateY(-5px) scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature h2 {
+    font-size: 1.8em;
+    color: #333;
+  }
+  
+  .feature p {
+    color: #533b4d;
+    font-size: 1em;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    margin-top: 50px;
+  }
+  
+  .cta-section h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .cta-button {
+    background-color: #ff385c;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #e31b41;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .feature-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .feature {
+      width: 80%;
+    }
+  }
+  
