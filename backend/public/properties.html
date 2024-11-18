@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties</title>
+    <script>
+        async function fetchProperties() {
+            const response = await fetch('/api/properties');
+            const properties = await response.json();
+            const propertiesList = document.getElementById('properties-list');
+            propertiesList.innerHTML = properties.map(property => `<li>${property.name} - ${property.address}</li>`).join('');
+        }
+        window.onload = fetchProperties;
+    </script>
+</head>
+<body>
+    <h1>Properties</h1>
+    <ul id="properties-list"></ul>
+    <a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings</title>
+    <script>
+        async function fetchBookings() {
+            const response = await fetch('/bookings');
+            const bookings = await response.json();
+            const bookingsList = document.getElementById('bookings-list');
+            bookingsList.innerHTML = bookings.map(booking => 
+                `<li>Booking ${booking.id} for Property ID ${booking.property_id} by User ID ${booking.guest_id}</li>`
+            ).join('');
+        }
+        window.onload = fetchBookings;
+    </script>
+</head>
+<body>
+    <h1>Bookings</h1>
+    <ul id="bookings-list"></ul>
+    <a href="/">Back to Home</a>
+</body>
+</html>
