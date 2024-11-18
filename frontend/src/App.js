@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import About from "./About";
-import Landlords from "./Landlords"; // Import the About component
+import Landlords from "./Landlords.js"; // Import the About component
 
 // Carousel component
 function Carousel({ properties }) {
@@ -47,6 +47,11 @@ function App() {
   const [passwordError, setPasswordError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [countryCode, setCountryCode] = useState("+91"); // Default country code
+  const [searchValues, setSearchValues] = useState({});
+  const [destination, setDestination] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -99,6 +104,18 @@ function App() {
       setPhoneError("Phone number must be 10 digits.");
     }
   };
+
+  const handleSearch = () => {
+    const searchPayload = {
+      destination: destination.trim(), // Remove unnecessary whitespaces
+      check_in: new Date(checkIn).toISOString().slice(0, 10), // Format as YYYY-MM-DD
+      check_out: new Date(checkOut).toISOString().slice(0, 10), // Format as YYYY-MM-DD
+      guests: parseInt(guests, 10) || 0, // Ensure guests is stored as a number
+    };
+  
+    console.log("Search Payload:", searchPayload);
+  };
+  
 
   // Confirm password validation
   const handleConfirmPasswordChange = (e) => {
@@ -198,24 +215,44 @@ function App() {
                 <div className="search-bar">
                   <div className="search-bar-item">
                     <label>Where</label>
-                    <input type="text" placeholder="Search destinations" />
+                    <input
+                      type="text"
+                      placeholder="Search destinations"
+                      value={destination}
+                      onChange={(e) => setDestination(e.target.value)}
+                    />
                   </div>
                   <span className="separator"></span>
                   <div className="search-bar-item">
                     <label>Check in</label>
-                    <input type="date" placeholder="Add dates" />
+                    <input
+                      type="date"
+                      placeholder="Add dates"
+                      value={checkIn}
+                      onChange={(e) => setCheckIn(e.target.value)}
+                    />
                   </div>
                   <span className="separator"></span>
                   <div className="search-bar-item">
                     <label>Check out</label>
-                    <input type="date" placeholder="Add dates" />
+                    <input
+                      type="date"
+                      placeholder="Add dates"
+                      value={checkOut}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                    />
                   </div>
                   <span className="separator"></span>
                   <div className="search-bar-item">
                     <label>Who</label>
-                    <input type="number" placeholder="Add guests" />
+                    <input
+                      type="text"
+                      placeholder="Add guests"
+                      value={guests}
+                      onChange={(e) => setGuests(e.target.value)}
+                    />
                   </div>
-                  <button className="search-button">🔍</button>
+                  <button className="search-button" onClick={handleSearch}>🔍</button>
                 </div>
 
                 {/* Carousel below the search bar */}
