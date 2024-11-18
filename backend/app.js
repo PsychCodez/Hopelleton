@@ -15,6 +15,7 @@ const guestRoutes = require('./routes/guest.js');
 const calendarRoutes = require('./routes/calendar.js');
 const locationRoutes = require('./routes/location.js');
 const identityVerificationRoutes = require('./routes/identityVerification.js');
+const queryRoute = require('./routes/queries.js');
 
 const app = express();
 const PORT = 3000;
@@ -36,6 +37,7 @@ app.use('/property-amenities', propertyAmenityRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/support-tickets', supportTicketRoutes);
 app.use('/identity-verifications', identityVerificationRoutes);
+app.use('/query',queryRoute);
 
 // Root route for serving the index page
 app.get('/', (req, res) => {

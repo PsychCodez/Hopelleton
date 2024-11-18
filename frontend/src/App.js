@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import About from "./About";
 import Landlords from "./Landlords.js"; // Import the About component
+import axios from 'axios';
 
 // Carousel component
 function Carousel({ properties }) {
