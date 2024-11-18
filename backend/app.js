@@ -16,9 +16,14 @@ const calendarRoutes = require('./routes/calendar.js');
 const locationRoutes = require('./routes/location.js');
 const identityVerificationRoutes = require('./routes/identityVerification.js');
 const queryRoute = require('./routes/queries.js');
+const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
+
+app.use(cors({
+      origin: 'http://localhost:3000',  // Allow only requests from localhost:3000
+    }));
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
