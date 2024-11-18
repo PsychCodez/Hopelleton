@@ -8,7 +8,7 @@
 /* Body style */
 body, .App {
   font-family: Arial, sans-serif;
-  background-image: url('C:/SEM-5/Database_Manage/hopelleton-frontend/public/Background.png'); /* Path to your background image */
+  background-image: url('../public/Background.png'); /* Path to your background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
