@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import About from "./About";
 import Landlords from "./Landlords.js"; // Import the About component
-import Admin from './admin.js';
+import './admin.js';
 
 // Carousel component
 function Carousel({ properties }) {
@@ -87,6 +87,7 @@ function App() {
             <Link to="/about">About</Link>
             <Link to="/">Renters</Link>
             <Link to="/landlords">Landlords</Link>
+            <Link to="/admin">Admin</Link>
           </div>
           {username ? (
             <span className="user-info">Welcome, {username}</span>
