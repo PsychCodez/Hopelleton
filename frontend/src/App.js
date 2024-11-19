@@ -67,7 +67,7 @@ function App() {
     };
 
     try {
-      const response = await axios.get('http://localhost:5000/query', {
+      const response = await axios.get('http://localhost:5000/query/available', {
         params: searchPayload,
       });
       setProperties(response.data); // Update state with fetched data

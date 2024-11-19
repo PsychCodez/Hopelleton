@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('../db/db.js'); // Your database connection
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/available', (req, res) => {
   // Destructure parameters from query string
   const { checkInDate, checkOutDate, maxGuests } = req.query;
 
