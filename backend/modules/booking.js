@@ -11,7 +11,6 @@ const createBookingTable = `
     CheckOutDate DATE,
     TotalCost DECIMAL(10, 2),
     BookingStatus VARCHAR(50),
-    PaymentID INT,
     CreatedDate DATE,
     UpdatedDate DATE
 );
@@ -29,9 +28,9 @@ db.query(createBookingTable, (err, result) => {
 
 module.exports = {
     // Create a booking
-    createBooking: (userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate, callback) => {
+    createBooking: (userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, createdDate, updatedDate, callback) => {
         const query = `
-            INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, PaymentID, CreatedDate, UpdatedDate) 
+            INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, CreatedDate, UpdatedDate) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate];

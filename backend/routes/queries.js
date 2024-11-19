@@ -148,7 +148,7 @@ router.post('/login', (req, res) => {
   // SQL query to check if the user exists and verify the password
   const query = `
     SELECT 
-        Name, Password, PhoneNumber
+        UserId, Name, Password, PhoneNumber
     FROM 
         User
     WHERE 
@@ -177,7 +177,7 @@ router.post('/login', (req, res) => {
     }
 
     // Create a session or state for the user
-    return res.status(200).json({ message: 'Login successful', username: user.Username });
+    return res.status(200).json({ "message": 'Login successful', "username": user.Name, "userid" : user.UserId });
   });
 });
 
