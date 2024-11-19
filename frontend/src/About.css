@@ -128,3 +128,85 @@
     }
   }
   
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+    width: 90%;
+  }
+  
+  .carousel {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .carousel-inner {
+    display: flex;
+  }
+  
+  .carousel-item {
+    flex: 0 0 300px;
+    margin: 0 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .property-info {
+    text-align: left;
+  }
+  
+  .property-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .property-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .property-rating,
+  .property-price {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  .carousel-button.prev {
+    left: -20px;
+  }
+  
+  .carousel-button.next {
+    right: -20px;
+  }
+  
+  .carousel-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .no-properties {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    margin: 20px 0;
+  }

@@ -6,37 +6,62 @@ import About from "./About";
 import Landlords from "./Landlords.js"; // Import the About component
 import './admin.js';
 
-// Carousel component
 function Carousel({ properties }) {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const itemWidth = 300; // Width of each carousel item
+  const visibleItems = 3; // Number of items visible at a time
 
   const scrollLeft = () => {
-    setScrollPosition((prev) => Math.max(prev - 300, 0));
+    setScrollPosition((prev) => Math.max(prev - itemWidth * visibleItems, 0));
   };
 
   const scrollRight = () => {
-    setScrollPosition((prev) => Math.min(prev + 300, properties.length * 300));
+    setScrollPosition((prev) =>
+      Math.min(prev + itemWidth * visibleItems, (properties.length - visibleItems) * itemWidth)
+    );
   };
+
+  if (!properties || properties.length === 0) {
+    return <p className="no-properties">No properties available</p>;
+  }
 
   return (
     <div className="carousel-wrapper">
-      <button onClick={scrollLeft} className="carousel-button prev">❮</button>
-      <div className="carousel" style={{ transform: `translateX(-${scrollPosition}px)` }}>
-        {properties.map((property, index) => (
-          <div key={index} className="carousel-item">
-            <div className="property-image">{property.image}</div>
-            <div className="property-info">
-              <h3>{property.title}</h3>
-              <p>{property.description}</p>
-              <p className="property-rating">⭐ {property.rating}</p>
+      <button
+        onClick={scrollLeft}
+        className="carousel-button prev"
+        disabled={scrollPosition === 0}
+      >
+        ❮
+      </button>
+      <div className="carousel">
+        <div
+          className="carousel-inner"
+          style={{ transform: `translateX(-${scrollPosition}px)` }}
+        >
+          {properties.map((property, index) => (
+            <div key={index} className="carousel-item">
+              <div className="property-info">
+                <h3 className="property-title">{property.title}</h3>
+                <p className="property-description">{property.description}</p>
+                <p className="property-rating">⭐ Rating: {property.rating}</p>
+                <p className="property-price">💰 Price: ${property.price} / night</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      <button onClick={scrollRight} className="carousel-button next">❯</button>
+      <button
+        onClick={scrollRight}
+        className="carousel-button next"
+        disabled={scrollPosition >= (properties.length - visibleItems) * itemWidth}
+      >
+        ❯
+      </button>
     </div>
   );
 }
+
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,9 +95,16 @@ function App() {
       const response = await axios.get('http://localhost:5000/query/available', {
         params: searchPayload,
       });
+      const formattedData = response.data.map((property) => ({
+      title: property.Title,
+      description: property.Description,
+      rating: parseFloat(property.AverageRating).toFixed(1),
+      price: parseFloat(property.PricePerNight).toFixed(2),
+    }));
       setProperties(response.data); // Update state with fetched data
     } catch (error) {
       console.error('Error fetching available properties:', error);
+      setProperties([]);
     }
   };
 

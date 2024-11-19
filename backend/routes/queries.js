@@ -3,33 +3,58 @@ const db = require('../db/db.js'); // Your database connection
 const router = express.Router();
 
 router.get('/available', (req, res) => {
-  // Destructure parameters from query string
   const { checkInDate, checkOutDate, maxGuests } = req.query;
-
-  // Validate that all required query parameters are provided
   if (!checkInDate || !checkOutDate || !maxGuests) {
     return res.status(400).json({ error: 'Missing required query parameters' });
   }
 
-  const query = `CALL GetAvailableProperties(?, ?, ?)`; // The stored procedure call
+  const query = `CALL GetAvailableProperties(?, ?, ?)`; 
 
-  // Execute the query with parameters
   db.query(query, [checkInDate, checkOutDate, maxGuests], (error, results) => {
     if (error) {
-      // Handle query execution error
       console.error('Error fetching available properties:', error);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    // Check if results exist
     if (results && results[0].length > 0) {
-      // Send the available properties as a response
       return res.status(200).json(results[0]);
     } else {
-      // Handle case where no properties are available
       return res.status(404).json({ message: 'No available properties found for the given criteria' });
     }
   });
 });
+
+router.get('/bookings/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  const query = `
+    SELECT 
+      b.BookingID, 
+      p.PropertyName, 
+      b.CheckInDate, 
+      b.CheckOutDate, 
+      (DATEDIFF(b.CheckOutDate, b.CheckInDate) * p.PricePerNight) AS TotalCost
+    FROM 
+      Bookings b
+    JOIN 
+      Properties p ON b.PropertyID = p.PropertyID
+    WHERE 
+      b.UserID = ?
+  `;
+
+  try {
+    const [results] = await db.execute(query, [userId]);
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No bookings found for the given user.' });
+    }
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 module.exports = router;
