@@ -26,15 +26,14 @@ function Booking() {
 
     // Prepare booking data to send to the backend
     const bookingData = {
-      PropertyID: propertyId,
-      UserID: userId,
-      CheckInDate: checkIn, // Make sure this is in the correct format (YYYY-MM-DD)
-      CheckOutDate: checkOut, // Same for checkOutDate
-      TotalCost: totalCost.toFixed(2), // Ensure it's formatted as a string with 2 decimal places
-      BookingStatus: 'Confirmed', // Example status
-      PaymentID: paymentId,
-      CreatedDate: createdDate,
-      UpdatedDate: updatedDate
+      userId: userId,
+      propertyId: propertyId,
+      checkInDate: checkIn, // Make sure this is in the correct format (YYYY-MM-DD)
+      checkOutDate: checkOut, // Same for checkOutDate
+      totalCost: totalCost.toFixed(2), // Ensure it's formatted as a string with 2 decimal places
+      bookingStatus: 'Confirmed', // Example status
+      createdDate: createdDate,
+      updatedDate: updatedDate
     };
 
     console.log('Booking data:', bookingData); // Log the data to see it
