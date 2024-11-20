@@ -1,0 +1,155 @@
+/* General Admin Panel Styling */
+.admin-panel {
+    font-family: 'Arial', sans-serif;
+    background-color: #e6f7ff;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, #ffffff, #f0f8ff);
+  }
+  
+  /* Heading Styling */
+  .admin-panel h1 {
+    color: #2f4f4f;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+  
+  /* Dropdown Styling */
+  .dropdown {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .dropdown label {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .dropdown select {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    width: 300px;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown select:hover {
+    border-color: #2e8b57;
+  }
+  
+  /* Fetch Button Styling */
+  .fetch-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: rgb(244, 240, 235); /* Updated color */
+    color: #333; /* Dark text for contrast */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fetch-button:hover {
+    background-color: rgb(224, 219, 209); /* Slightly darker shade for hover effect */
+    transform: scale(1.05);
+  }
+  
+  /* Error Message Styling */
+  .error {
+    color: #f44336;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  /* Results Section Styling */
+  .results {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Styling */
+  .results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed; /* Ensure table adjusts well with content */
+  }
+  
+  /* Adding scroll to tables */
+  .results {
+    max-width: 100%;
+    overflow-x: auto; /* Enable horizontal scroll if content overflows */
+  }
+  
+  .results th, .results td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 1.1rem;
+    word-wrap: break-word;
+  }
+  
+  .results th {
+    background-color: rgb(244, 240, 235); /* Updated color */
+    color: #333; /* Dark text for readability */
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .results tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .results tr:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .results td {
+    font-size: 1rem;
+  }
+  
+  /* Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .admin-panel {
+      padding: 15px;
+    }
+  
+    .dropdown select, .fetch-button {
+      width: 100%;
+      font-size: 1.1rem;
+    }
+  
+    .results table {
+      font-size: 0.9rem;
+    }
+  }
+  

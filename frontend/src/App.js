@@ -3,8 +3,10 @@ import axios from 'axios'; // Import axios for making HTTP requests
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import About from "./About.js";
-import Landlords from "./Landlords.js"; // Import the About component
-import './admin.js';
+import Landlords from "./Landlords.js";
+import BookingPage from "./BookingPage.js"; // Import the About component
+import Admin from "./admin.js";
+import WriteReview from "./WriteReview.js";
 
 // Carousel component
 function Carousel({ properties }) {
@@ -29,6 +31,7 @@ function Carousel({ properties }) {
               <h3>{property.Title}</h3>
               <p>{property.Description}</p>
               <p className="property-rating">⭐ {property.AverageRating}</p>
+              <Link to={`/booking/${property.id}`} className="book-button">Book</Link>
             </div>
           </div>
         ))}
@@ -41,7 +44,7 @@ function Carousel({ properties }) {
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -89,11 +92,11 @@ function App() {
     const registrationPayload = {
       name: username,
       email: event.target.email.value,
-      phoneNumber: `${countryCode}${phone}`,
+      phoneNumber: `${phone}`,
       password: password,
       profilePicture: null, // Default value
-      verificationStatus: false, // Default value
-      dateJoined: new Date().toISOString(), // Current timestamp
+      verificationStatus: 0, // Default value
+      dateJoined: new Date().toISOString(), // Current timestamp  "2023-07-01"
     };
   
     try {
@@ -103,6 +106,7 @@ function App() {
         alert("Registration successful. You can now log in.");
         setIsRegisterMode(false); // Switch to login mode after registration
       } else {
+        console.log(response.data)
         alert(response.data.message || "Registration failed. Please try again.");
       }
     } catch (error) {
@@ -159,6 +163,7 @@ function App() {
             <Link to="/">Renters</Link>
             <Link to="/landlords">Landlords</Link>
             <Link to="/admin">Admin</Link>
+            <Link to="/writereview">Write a Review</Link>
           </div>
           {username ? (
             <span className="user-info">Welcome, {username}</span>
@@ -290,6 +295,9 @@ function App() {
               <Carousel properties={properties} />
             </>
           } />
+          <Route path="/writereview" element={<WriteReview />}/>
+            <Route path="/admin" element={<Admin />} />
+          <Route path="/booking/:userId" element={<BookingPage />} />
           <Route path="/about" element={<About openModal={openModal} />} />
           <Route path="/landlords" element={<Landlords />} />
         </Routes>
