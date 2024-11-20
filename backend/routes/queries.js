@@ -139,7 +139,6 @@ router.get('/properties/:hostId', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { phoneNumber, password } = req.body;
-
   // Validate that both phoneNumber and password are provided
   if (!phoneNumber || !password) {
     return res.status(400).json({ error: 'Missing required fields: phoneNumber and password' });
@@ -180,6 +179,5 @@ router.post('/login', (req, res) => {
     return res.status(200).json({ "message": 'Login successful', "username": user.Name, "userid" : user.UserId });
   });
 });
-
 
 module.exports = router;
