@@ -60,27 +60,9 @@
     margin: 0 10px;
   }
   
-  /* Booking Button */
-  .book-button {
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
-    max-width: 200px;
-    margin-top: 20px;
-  }
-  
-  .book-button:hover {
-    background-color: #0056b3;
-  }
-  
   /* Booking Details */
   .booking-details {
+    color: black;
     margin-top: 30px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -135,4 +117,44 @@
       max-width: none;
     }
   }
-  
+/* Confirm Booking Button */
+.confirm-button {
+    padding: 14px 28px;
+    background-color: #28a745; /* Green color */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto;
+    text-align: center;
+    display: block;
+}
+
+/* Hover Effect */
+.confirm-button:hover {
+    background-color: #218838; /* Darker green */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Active State */
+.confirm-button:active {
+    background-color: #1e7e34; /* Darkest green */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Smaller shadow */
+    transform: translateY(1px); /* Slight press effect */
+}
+
+/* Disabled State */
+.confirm-button:disabled {
+    background-color: #cccccc; /* Light gray */
+    color: #666666; /* Dark gray */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}

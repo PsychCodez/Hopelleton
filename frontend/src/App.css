@@ -25,6 +25,8 @@ body, .App {
   padding: 20px;
   background-color: #ffffff; /* White background */
   border-bottom: 2px solid #d1c8be;
+  z-index: 1100; /* Higher than the modal */
+  position: relative;
 }
 
 .navbar .center-links {
@@ -107,15 +109,14 @@ body, .App {
   justify-content: center;
   font-size: 20px;
 }
+
+/* Modal Overlay */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
@@ -131,6 +132,7 @@ body, .App {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1050; /* Above the overlay */
 }
 
 .modal-content h2 {
@@ -176,6 +178,7 @@ body, .App {
 .modal-content button.close-modal:hover {
   color: #333;
 }
+
 .register-link {
   margin-top: 10px;
   color: #007aff; /* Link color */
@@ -187,6 +190,7 @@ body, .App {
 .register-link:hover {
   color: #005bb5; /* Darker color on hover */
 }
+
 .phone-input {
   display: flex;
   gap: 10px;
@@ -206,7 +210,6 @@ body, .App {
   margin-bottom: 10px;
 }
 
-
 .property-image {
   height: 200px;
   background-color: #ddd;
@@ -216,6 +219,7 @@ body, .App {
   padding: 10px;
   color: black;
 }
+
 .carousel-wrapper {
   position: relative;
   overflow: hidden;
