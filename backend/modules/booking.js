@@ -28,12 +28,13 @@ db.query(createBookingTable, (err, result) => {
 
 module.exports = {
     // Create a booking
-    createBooking: (userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, createdDate, updatedDate, callback) => {
+    createBooking: (bookingData, callback) => {
         const query = `
             INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, CreatedDate, UpdatedDate) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         `;
-        const values = [userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate];
+        const values = [bookingData.userId, bookingData.propertyId, bookingData.checkInDate, bookingData.checkOutDate, bookingData.totalCost, bookingData.bookingStatus, bookingData.createdDate, bookingData.updatedDate];
+        console.log(values);
         db.query(query, values, callback);
     },
 

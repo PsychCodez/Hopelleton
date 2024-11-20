@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Payment (
     PaymentStatus VARCHAR(50));
 `;
 
-// const updateReferences1 = `ALTER TABLE Booking ADD FOREIGN KEY (PaymentID) REFERENCES Payment(PaymentID);`;
+const updateReferences1 = `ALTER TABLE Booking ADD FOREIGN KEY (PaymentID) REFERENCES Payment(PaymentID);`;
 const updateReferences2 = `ALTER TABLE Payment ADD FOREIGN KEY (BookingID) REFERENCES Booking(BookingID);`;
 
 db.query(paymentTable, (err, result) => {

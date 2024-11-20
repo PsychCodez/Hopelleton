@@ -27,20 +27,20 @@ const setupDatabase = () => {
                 END ;
                 `,
             },
-            {
-                name: 'UpdateCalendarAvailabilityAfterBooking',
-                sql: `
-                CREATE TRIGGER UpdateCalendarAvailabilityAfterBooking
-                AFTER INSERT ON Booking
-                FOR EACH ROW
-                BEGIN
-                    UPDATE Calendar
-                    SET IsAvailable = 0
-                    WHERE PropertyID = NEW.PropertyID
-                    AND BookingDate BETWEEN NEW.CheckInDate AND NEW.CheckOutDate;
-                END;
-                `,
-            },
+            // {
+            //     name: 'UpdateCalendarAvailabilityAfterBooking',
+            //     sql: `
+            //     CREATE TRIGGER UpdateCalendarAvailabilityAfterBooking
+            //     AFTER INSERT ON Booking
+            //     FOR EACH ROW
+            //     BEGIN
+            //         UPDATE Calendar
+            //         SET IsAvailable = 0
+            //         WHERE PropertyID = NEW.PropertyID
+            //         AND BookingDate BETWEEN NEW.CheckInDate AND NEW.CheckOutDate;
+            //     END;
+            //     `,
+            // },
         ];
 
         // Execute each trigger
