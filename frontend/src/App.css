@@ -205,35 +205,7 @@ body, .App {
   margin-top: -8px;
   margin-bottom: 10px;
 }
-.carousel-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
 
-.carousel {
-  display: flex;
-  gap: 46px; /* Adjust spacing as needed */
-  transition: transform 0.3s ease-in-out;
-  width: 100%; /* Ensures it spans across the container */
-}
-
-.carousel-item {
-  flex: 100px 0 300px; /* Adjust width as needed */
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.carousel-button {
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
 
 .property-image {
   height: 200px;
@@ -243,4 +215,86 @@ body, .App {
 .property-info {
   padding: 10px;
   color: black;
+}
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-inner {
+  display: flex;
+}
+
+.carousel-item {
+  flex: 0 0 300px;
+  margin: 0 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.property-info {
+  text-align: left;
+}
+
+.property-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.property-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.property-rating,
+.property-price {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.carousel-button.prev {
+  left: -20px;
+}
+
+.carousel-button.next {
+  right: -20px;
+}
+
+.carousel-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.no-properties {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin: 20px 0;
 }
