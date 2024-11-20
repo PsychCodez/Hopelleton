@@ -89,17 +89,17 @@ function App() {
     const registrationPayload = {
       name: username,
       email: event.target.email.value,
-      phoneNumber: `${countryCode}${phone}`,
       password: password,
+      phoneNumber: `${phone}`,
       profilePicture: null, // Default value
-      verificationStatus: false, // Default value
-      dateJoined: new Date().toISOString(), // Current timestamp
+      verificationStatus: 0, // Default value
+      dateJoined: "2023-06-10", // Current timestamp
     };
   
     try {
       // Make POST request to registration route
       const response = await axios.post("http://localhost:5000/users/", registrationPayload);
-      if (response.data.success) {
+      if (response.status === 201) {
         alert("Registration successful. You can now log in.");
         setIsRegisterMode(false); // Switch to login mode after registration
       } else {
