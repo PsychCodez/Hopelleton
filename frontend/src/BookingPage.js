@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for API calls
+import "./Booking.css"
 
 function Booking() {
   const [destination, setDestination] = useState('');
@@ -40,7 +41,7 @@ function Booking() {
     console.log('Booking data:', bookingData); // Log the data to see it
 
     // Make the POST request to create the booking
-    axios.post('http://localhost:5000/bookings', bookingData)
+    axios.post('http://localhost:5000/bookings/', bookingData)
       .then((response) => {
         console.log('Booking confirmed:', response.data);
 
@@ -132,7 +133,7 @@ function Booking() {
           </button>
         </div>
       ) : (
-        <button onClick={handleBook} className="book-button">Confirm Booking</button>
+        <button onClick={handleBook} className="confirm-button">Confirm Booking</button>
       )}
     </div>
   );
