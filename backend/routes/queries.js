@@ -137,6 +137,65 @@ router.get('/properties/:hostId', (req, res) => {
   });
 });
 
+router.post('/login', (req, res) => {
+  const { phoneNumber, password } = req.body;
+  // Validate that both phoneNumber and password are provided
+  if (!phoneNumber || !password) {
+    return res.status(400).json({ error: 'Missing required fields: phoneNumber and password' });
+  }
 
+  // SQL query to check if the user exists and verify the password
+  const query = `
+    SELECT 
+        UserId, Name, Password, PhoneNumber
+    FROM 
+        User
+    WHERE 
+        PhoneNumber = ?
+  `;
 
+  // Query parameters
+  const queryParams = [phoneNumber];
+
+  // Execute the query
+  db.query(query, queryParams, (error, results) => {
+    if (error) {
+      console.error('Error during login:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    // If no user is found with the given phoneNumber
+    if (!results || results.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Verify the password
+    const user = results[0];
+    if (user.Password !== password) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    // Create a session or state for the user
+    return res.status(200).json({ "message": 'Login successful', "username": user.Name, "userid" : user.UserId });
+  });
+});
+
+router.post('/cancellation', (req, res) => {
+  const { bookingId } = req.body; // Use `req.body` for POST payload
+
+  if (!bookingId) {
+    return res.status(400).json({ error: 'Missing required parameter: bookingId' });
+  }
+
+  const query = `CALL CancelBooking(?);`; // Use parameterized query for security
+
+  db.query(query, [bookingId], (error, results) => {
+    if (error) {
+      console.error('Error cancelling booking:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    return res.status(200).json({ message: 'Booking cancelled successfully.' });
+  });
+});
 module.exports = router;

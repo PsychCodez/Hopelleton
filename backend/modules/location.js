@@ -22,12 +22,12 @@ db.query(locationTable, (err, result) => {
 });
 
 module.exports = {
-    createLocation: (propertyId, city, state, country, latitude, longitude, callback) => {
+    createLocation: (propData, callback) => {
         const query = `
             INSERT INTO Location (PropertyID, City, State, Country, Latitude, Longitude) 
             VALUES (?, ?, ?, ?, ?, ?)
         `;
-        db.query(query, [propertyId, city, state, country, latitude, longitude], callback);
+        db.query(query, [propData.propertyId, propData.city, propData.state, propData.country, propData.latitude, propData.longitude], callback);
     },
 
     findLocationByPropertyId: (propertyId, callback) => {
@@ -35,13 +35,13 @@ module.exports = {
         db.query(query, [propertyId], callback);
     },
 
-    updateLocation: (propertyId, city, state, country, latitude, longitude, callback) => {
+    updateLocation: (propData, callback) => {
         const query = `
             UPDATE Location 
             SET City = ?, State = ?, Country = ?, Latitude = ?, Longitude = ? 
             WHERE PropertyID = ?
         `;
-        db.query(query, [city, state, country, latitude, longitude, propertyId], callback);
+        db.query(query, [propData.city, propData.state, propData.country, propData.latitude, propData.longitude, propData.propertyId], callback);
     },
 
     deleteLocation: (propertyId, callback) => {

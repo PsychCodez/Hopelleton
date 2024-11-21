@@ -22,12 +22,12 @@ db.query(calendarTable, (err, result) => {
 });
 
 module.exports = {
-    createAvailability: (propertyId, date, isAvailable, notes, callback) => {
+    createAvailability: (calendarData, callback) => {
         const query = `
             INSERT INTO CalendarAvailability (PropertyID, Date, IsAvailable, Notes) 
             VALUES (?, ?, ?, ?)
         `;
-        db.query(query, [propertyId, date, isAvailable, notes], callback);
+        db.query(query, [calendarData.propertyId, calendarData.date, calendarData.isAvailable, calendarData.notes], callback);
     },
 
     findAvailabilityById: (availabilityId, callback) => {
@@ -35,13 +35,13 @@ module.exports = {
         db.query(query, [availabilityId], callback);
     },
 
-    updateAvailability: (availabilityId, date, isAvailable, notes, callback) => {
+    updateAvailability: (calendarData, callback) => {
         const query = `
             UPDATE CalendarAvailability 
             SET Date = ?, IsAvailable = ?, Notes = ? 
             WHERE AvailabilityID = ?
         `;
-        db.query(query, [date, isAvailable, notes, availabilityId], callback);
+        db.query(query, [calendarData.date, calendarData.isAvailable, calendarData.notes, calendarData.availabilityId], callback);
     },
 
     deleteAvailability: (availabilityId, callback) => {
