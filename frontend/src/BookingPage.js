@@ -63,8 +63,8 @@ function Booking() {
   const handleCancelBooking = () => {
     // Check if bookingConfirmation exists and has a valid BookingID
     if (bookingConfirmation && bookingConfirmation.BookingID) {
-      const bookingId = bookingConfirmation.BookingID; // Use BookingID for cancellation
-      axios.delete(`http://localhost:5000/bookings/${bookingId}`)
+      const bookingIdData = { bookingId: bookingConfirmation.BookingID} // Use BookingID for cancellation
+      axios.post(`http://localhost:5000/query/cancellation`,bookingIdData)
         .then((response) => {
           console.log('Booking cancelled:', response.data);
           setBookingConfirmation(null); // Clear booking confirmation after cancellation

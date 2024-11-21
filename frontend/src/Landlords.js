@@ -22,14 +22,14 @@ function Landlords() {
   useEffect(() => {
     // Initial properties (or fetch from backend if needed)
     setAddedProperties([
-      { id: 1, title: "Villa in Jalahalli", address: "123 Main St", city: "Bangalore", price: "₹5000/night", propertyType: "Villa" },
+      { id: 7, title: "Cozy Cottage", address: "123 Main St", city: "Bangalore", price: "₹5000/night", propertyType: "Villa" },
       { id: 2, title: "Apartment in Whitefield", address: "456 Elm St", city: "Bangalore", price: "₹3500/night", propertyType: "Apartment" },
     ]);
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/properties/${id}`); // Replace with your backend's base URL
+      await axios.delete(`http://localhost:5000/properties/7`); // Replace with your backend's base URL
       const updatedProperties = addedProperties.filter((property) => property.id !== id);
       setAddedProperties(updatedProperties);
       alert("Property deleted successfully!");

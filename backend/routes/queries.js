@@ -180,4 +180,22 @@ router.post('/login', (req, res) => {
   });
 });
 
+router.post('/cancellation', (req, res) => {
+  const { bookingId } = req.body; // Use `req.body` for POST payload
+
+  if (!bookingId) {
+    return res.status(400).json({ error: 'Missing required parameter: bookingId' });
+  }
+
+  const query = `CALL CancelBooking(?);`; // Use parameterized query for security
+
+  db.query(query, [bookingId], (error, results) => {
+    if (error) {
+      console.error('Error cancelling booking:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    return res.status(200).json({ message: 'Booking cancelled successfully.' });
+  });
+});
 module.exports = router;
