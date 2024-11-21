@@ -57,6 +57,7 @@ function App() {
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("");
   const [properties, setProperties] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false); 
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -72,8 +73,12 @@ function App() {
   
     try {
       // Make POST request to login route
+      console.log("Entering LOGIN")
       const response = await axios.post("http://localhost:5000/query/login", loginPayload);
-      if (response.data.success) {
+      console.log("Exiting LOGIN")
+      console.log(response)
+      if (response.status === 200) {
+        console.log(response.data.username)
         setUsername(response.data.username); // Set username on successful login
         closeModal();
       } else {
@@ -114,7 +119,10 @@ function App() {
       alert("An error occurred while registering. Please try again later.");
     }
   }
-
+  const handleLogout = () => {
+    setUsername(""); // Clear username on logout
+    // Add any other state resets or session cleanup here
+  };
   const handleSearch = async () => {
     const searchPayload = {
       // destination: destination.trim(),
@@ -166,7 +174,19 @@ function App() {
             <Link to="/writereview">Write a Review</Link>
           </div>
           {username ? (
-            <span className="user-info">Welcome, {username}</span>
+            <div className="user-info">
+              <span
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="username"
+              >
+                Welcome, {username}<span className="login-icon">👤</span>
+              </span>
+              {showDropdown && (
+                <div className="dropdown">
+                  <button onClick={handleLogout}>Logout</button>
+                </div>
+              )}
+            </div>
           ) : (
             <a href="#login" onClick={openModal}>
               Login <span className="login-icon">👤</span>

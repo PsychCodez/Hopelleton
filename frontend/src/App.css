@@ -387,4 +387,34 @@ body, .App {
   background-color: rgba(200, 200, 200, 0.5); /* Light gray for disabled */
   cursor: not-allowed;
 }
+/* User Dropdown */
+.user-info {
+  position: relative;
+}
+
+.username {
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown button {
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background-color: #f1f1f1;
+}
 
