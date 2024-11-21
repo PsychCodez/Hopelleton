@@ -4,29 +4,23 @@ const setupDatabase = () => {
     return new Promise((resolve, reject) => {
         const triggers = [
             {
-                name: 'UpdateAverageRatingAfterInsert',
+                name: 'updateAverage',
                 sql: `
-                CREATE TRIGGER updateAverage AFTER INSERT ON Review
+                CREATE TRIGGER updateAverage
+                AFTER INSERT ON Review
                 FOR EACH ROW
                 BEGIN
-                    DECLARE avgRating DECIMAL(2,1);
-                    
-                    SELECT PropertyID 
-                    INTO @PropertyID
-                    FROM Booking 
-                    WHERE BookingID = NEW.BookingID;
-                    
-                    SELECT AVG(Rating) 
-                    INTO avgRating
-                    FROM Review
-                    WHERE BookingID IN (SELECT BookingID FROM Booking WHERE PropertyID = @PropertyID);
-                
                     UPDATE Property
-                    SET AverageRating = avgRating
-                    WHERE PropertyID = @PropertyID;
+                    SET AverageRating = (
+                        SELECT AVG(Rating)
+                        FROM Review
+                        WHERE PropertyID = NEW.PropertyID
+                    )
+                    WHERE PropertyID = NEW.PropertyID;
                 END ;
                 `,
             },
+<<<<<<< HEAD
             // {
             //     name: 'UpdateCalendarAvailabilityAfterBooking',
             //     sql: `
@@ -41,6 +35,34 @@ const setupDatabase = () => {
             //     END;
             //     `,
             // },
+=======
+            {
+                name: 'incHostPropCount',
+                sql: `
+                CREATE TRIGGER incHostPropCount
+                AFTER INSERT ON Property
+                FOR EACH ROW
+                BEGIN
+                    UPDATE Host
+                    SET NumberOfProperties = NumberOfProperties + 1
+                    WHERE HostID = NEW.HostID;
+                END ;
+                `,
+            },
+            {
+                name: 'incGuestBookCount',
+                sql: `
+                CREATE TRIGGER incGuestBookCount
+                AFTER INSERT ON Booking
+                FOR EACH ROW
+                BEGIN
+                    UPDATE Guest
+                    SET NumberOfBookings = NumberOfBookings+ 1
+                    WHERE UserID = NEW.UserID;
+                END ;
+                `,
+            },
+>>>>>>> Test
         ];
 
         // Execute each trigger
