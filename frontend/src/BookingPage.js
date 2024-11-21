@@ -62,9 +62,9 @@ function Booking() {
   const handleCancelBooking = () => {
     if (bookingConfirmation) {
       axios
-      .get("http://localhost:5000/query/bookings/maxid")
+      .get("http://localhost:5000/query/book/ma")
       .then((response) => {
-        const maxBookingID = response.data.maxId; // Adjust based on your backend response structure
+        const maxBookingID = response.data.BookingID; // Adjust based on your backend response structure
         console.log('Retrieved max booking ID:', maxBookingID);
 
         // Proceed to cancel the booking using the max ID
