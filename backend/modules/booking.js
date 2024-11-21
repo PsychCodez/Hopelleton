@@ -28,12 +28,12 @@ db.query(createBookingTable, (err, result) => {
 
 module.exports = {
     // Create a booking
-    createBooking: (userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, createdDate, updatedDate, callback) => {
+    createBooking: (bookingData, callback) => {
         const query = `
             INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, CreatedDate, UpdatedDate) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const values = [userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate];
+        const values = [bookingData.userId, bookingData.propertyId, bookingData.checkInDate, bookingData.checkOutDate, bookingData.totalCost, bookingData.bookingStatus, bookingData.createdDate, bookingData.updatedDate];
         db.query(query, values, callback);
     },
 
@@ -44,13 +44,13 @@ module.exports = {
     },
 
     // Update a booking
-    updateBooking: (bookingId, checkInDate, checkOutDate, totalCost, bookingStatus, updatedDate, callback) => {
+    updateBooking: (bookingData, callback) => {
         const query = `
             UPDATE Booking 
             SET CheckInDate = ?, CheckOutDate = ?, TotalCost = ?, BookingStatus = ?, UpdatedDate = ? 
             WHERE BookingID = ?
         `;
-        const values = [checkInDate, checkOutDate, totalCost, bookingStatus, updatedDate, bookingId];
+        const values = [bookingData.checkInDate, bookingData.checkOutDate, bookingData.totalCost, bookingData.bookingStatus, bookingData.updatedDate, bookingData.bookingId];
         db.query(query, values, callback);
     },
 

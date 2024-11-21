@@ -38,12 +38,12 @@ db.query(updateReferences2, (err, result) => {
 
 
 module.exports = {
-    createPayment: (bookingId, paymentMethod, transactionId, paymentAmount, paymentDate, paymentStatus, callback) => {
+    createPayment: (paymentData, callback) => {
         const query = `
             INSERT INTO Payment (BookingID, PaymentMethod, TransactionID, PaymentAmount, PaymentDate, PaymentStatus) 
             VALUES (?, ?, ?, ?, ?, ?)
         `;
-        db.query(query, [bookingId, paymentMethod, transactionId, paymentAmount, paymentDate, paymentStatus], callback);
+        db.query(query, [paymentData.bookingId, paymentData.paymentMethod, paymentData.transactionId, paymentData.paymentAmount, paymentData.paymentDate, paymentData.paymentStatus], callback);
     },
 
     findPaymentById: (paymentId, callback) => {
@@ -51,13 +51,13 @@ module.exports = {
         db.query(query, [paymentId], callback);
     },
 
-    updatePayment: (paymentId, paymentStatus, callback) => {
+    updatePayment: (paymentData, callback) => {
         const query = `
             UPDATE Payment 
             SET PaymentStatus = ? 
             WHERE PaymentID = ?
         `;
-        db.query(query, [paymentStatus, paymentId], callback);
+        db.query(query, [paymentData.paymentStatus, paymentData.paymentId], callback);
     },
 
     deletePayment: (paymentId, callback) => {

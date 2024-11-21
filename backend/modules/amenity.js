@@ -21,12 +21,12 @@ db.query(amenityTable, (err, result) => {
 
 
 module.exports = {
-    createAmenity: (name, description, additionalInfo, callback) => {
+    createAmenity: (amenityData, callback) => {
         const query = `
             INSERT INTO Amenity (Name, Description, AdditionalInfo) 
             VALUES (?, ?, ?)
         `;
-        db.query(query, [name, description, additionalInfo], callback);
+        db.query(query, [amenityData.name, amenityData.description, amenityData.additionalInfo], callback);
     },
 
     findAmenityById: (amenityId, callback) => {
@@ -34,13 +34,13 @@ module.exports = {
         db.query(query, [amenityId], callback);
     },
 
-    updateAmenity: (amenityId, name, description, additionalInfo, callback) => {
+    updateAmenity: (amenityData, callback) => {
         const query = `
             UPDATE Amenity 
             SET Name = ?, Description = ?, AdditionalInfo = ? 
             WHERE AmenityID = ?
         `;
-        db.query(query, [name, description, additionalInfo, amenityId], callback);
+        db.query(query, [amenityData.name, amenityData.description, amenityData.additionalInfo, amenityData.amenityId], callback);
     },
 
     deleteAmenity: (amenityId, callback) => {

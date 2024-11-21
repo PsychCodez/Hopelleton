@@ -22,12 +22,12 @@ db.query(reviewTable, (err, result) => {
 });
 
 module.exports = {
-    createReview: (bookingId, userId, rating, comment, reviewDate, callback) => {
+    createReview: (reviewData, callback) => {
         const query = `
             INSERT INTO Review (BookingID, UserID, Rating, Comment, ReviewDate) 
             VALUES (?, ?, ?, ?, ?)
         `;
-        db.query(query, [bookingId, userId, rating, comment, reviewDate], callback);
+        db.query(query, [reviewData.bookingId, reviewData.userId, reviewData.rating, reviewData.comment, reviewData.reviewDate], callback);
     },
 
     findReviewById: (reviewId, callback) => {
@@ -35,13 +35,13 @@ module.exports = {
         db.query(query, [reviewId], callback);
     },
 
-    updateReview: (reviewId, rating, comment, reviewDate, callback) => {
+    updateReview: (reviewData, callback) => {
         const query = `
             UPDATE Review 
             SET Rating = ?, Comment = ?, ReviewDate = ? 
             WHERE ReviewID = ?
         `;
-        db.query(query, [rating, comment, reviewDate, reviewId], callback);
+        db.query(query, [reviewData.rating, reviewData.comment, reviewData.reviewDate, reviewData.reviewId], callback);
     },
 
     deleteReview: (reviewId, callback) => {
