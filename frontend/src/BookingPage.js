@@ -59,21 +59,30 @@ function Booking() {
         console.error('Error confirming booking:', error);
       });
   };
-
   const handleCancelBooking = () => {
-    // Check if bookingConfirmation exists and has a valid BookingID
-    if (bookingConfirmation && bookingConfirmation.BookingID) {
-      const bookingIdData = { bookingId: bookingConfirmation.BookingID} // Use BookingID for cancellation
-      axios.post(`http://localhost:5000/query/cancellation`,bookingIdData)
-        .then((response) => {
-          console.log('Booking cancelled:', response.data);
-          setBookingConfirmation(null); // Clear booking confirmation after cancellation
-        })
-        .catch((error) => {
-          console.error('Error cancelling booking:', error);
-        });
+    if (bookingConfirmation) {
+      axios
+      .get("http://localhost:5000/query/bookings/maxid")
+      .then((response) => {
+        const maxBookingID = response.data.maxId; // Adjust based on your backend response structure
+        console.log('Retrieved max booking ID:', maxBookingID);
+
+        // Proceed to cancel the booking using the max ID
+        const bookingIdData = { bookingId: maxBookingID };
+        return axios.post(`http://localhost:5000/query/cancellation`, bookingIdData);
+      })
+      .then((response) => {
+        console.log('Booking cancelled:', response.data);
+        setBookingConfirmation(null); // Clear booking confirmation after cancellation
+      })
+      .catch((error) => {
+        console.error('Error cancelling booking:', error);
+      });
+    } else {
+      console.log("Error");
     }
   };
+  
 
   return (
     <div className="booking-page">
