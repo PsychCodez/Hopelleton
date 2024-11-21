@@ -141,5 +141,46 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  /* Delete Button */
+.creative-delete-button {
+  background: linear-gradient(135deg, #ff8080, #ff4d4d); /* Soft gradient */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  transition: all 0.3s ease-in-out;
+}
+
+.creative-delete-button .delete-icon {
+  font-size: 1.2rem; /* Adjust icon size */
+}
+
+.creative-delete-button:hover {
+  background: linear-gradient(135deg, #ff4d4d, #cc0000); /* Darker gradient on hover */
+  box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.25); /* More prominent shadow */
+  transform: scale(1.05); /* Slight zoom-in */
+}
+
+.creative-delete-button:active {
+  transform: scale(0.95); /* Press-down effect */
+}
+
+.delete-text {
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+.creative-delete-button:hover .delete-text {
+  display: inline-block; /* Show text on hover */
+  opacity: 1;
+}
+
   
   

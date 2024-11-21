@@ -23,9 +23,9 @@ body, .App {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #ffffff; /* White background */
+  background-color: #ffffff;
   border-bottom: 2px solid #d1c8be;
-  z-index: 1100; /* Higher than the modal */
+  z-index: 1100;
   position: relative;
 }
 
@@ -58,7 +58,7 @@ body, .App {
   margin: 100px auto;
   padding: 10px 20px;
   background-color: #ffffff;
-  border-radius: 30px;
+  border-radius: 60000000000px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 800px;
 }
@@ -132,7 +132,7 @@ body, .App {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1050; /* Above the overlay */
+  z-index: 1050;
 }
 
 .modal-content h2 {
@@ -181,14 +181,14 @@ body, .App {
 
 .register-link {
   margin-top: 10px;
-  color: #007aff; /* Link color */
+  color: #007aff;
   cursor: pointer;
   font-size: 14px;
   text-decoration: underline;
 }
 
 .register-link:hover {
-  color: #005bb5; /* Darker color on hover */
+  color: #005bb5;
 }
 
 .phone-input {
@@ -210,95 +210,181 @@ body, .App {
   margin-bottom: 10px;
 }
 
-.property-image {
-  height: 200px;
-  background-color: #ddd;
-}
-
-.property-info {
-  padding: 10px;
-  color: black;
-}
-
+/* Carousel Wrapper */
 .carousel-wrapper {
   position: relative;
   overflow: hidden;
-  margin: 20px auto;
-  width: 90%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
 }
 
 .carousel {
   display: flex;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease; /* Smooth scrolling */
+}
+
+.carousel-item {
+  min-width: 300px; /* Fixed width */
+  height: 350px; /* Fixed height */
+  margin: 0 10px; /* Optional spacing between items */
+  box-sizing: border-box;
+  background-color: #ffffff; /* Add background color for uniformity */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.property-image {
+  height: 150px; /* Fixed height for images */
+  width: 100%; /* Full width */
+  background-color: #f0f0f0; /* Placeholder for images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover; /* Ensure images fit within the container */
+}
+
+.property-info {
+  padding: 10px;
+  text-align: center;
+  flex-grow: 1; /* Fill remaining space with text */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.property-info h3 {
+  font-size: 18px;
+  margin: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.property-info p {
+  font-size: 14px;
+  margin: 5px 0;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.property-rating {
+  font-weight: bold;
+  color: #ffcc00;
+}
+
+
+/* Carousel */
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  padding: 20px 0;
 }
 
 .carousel-inner {
   display: flex;
+  gap: 15px;
 }
 
 .carousel-item {
   flex: 0 0 300px;
-  margin: 0 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 20px;
+  padding: 15px;
+  text-align: center;
+  background-color: #fff; /* White background */
+  color: #000; /* Black text color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Property Image */
+.property-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Property Info */
 .property-info {
-  text-align: left;
+  text-align: center;
 }
 
 .property-title {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: #000; /* Black title text */
   margin-bottom: 10px;
 }
 
 .property-description {
   font-size: 14px;
-  color: #555;
+  color: #444; /* Slightly lighter black for description */
   margin-bottom: 8px;
 }
 
 .property-rating,
 .property-price {
   font-size: 14px;
-  color: #777;
+  color: #777; /* Gray color for rating/price */
   margin-bottom: 5px;
 }
 
+.book-button {
+  padding: 10px 15px;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.book-button:hover {
+  background-color: #005bb5;
+}
+
+/* Carousel Navigation Buttons */
 .carousel-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #333;
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black for better visibility */
+  color: #fff; /* White arrow color */
   border: none;
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
-  z-index: 1;
+  z-index: 10;
 }
 
 .carousel-button.prev {
-  left: -20px;
+  left: 10px;
 }
 
 .carousel-button.next {
-  right: -20px;
+  right: 10px;
 }
 
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darker black on hover */
+}
+
+/* Disable Button State */
 .carousel-button:disabled {
-  background-color: #ccc;
+  background-color: rgba(200, 200, 200, 0.5); /* Light gray for disabled */
   cursor: not-allowed;
 }
 
-.no-properties {
-  text-align: center;
-  font-size: 16px;
-  color: #555;
-  margin: 20px 0;
-}
