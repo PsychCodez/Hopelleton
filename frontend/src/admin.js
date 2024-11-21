@@ -1,46 +1,51 @@
-// Admin.js (React)
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './Admin.css'; // Styling for the admin panel
 
 function Admin() {
-  const [endpoints, setEndpoints] = useState([]); // For storing backend available actions
-  const [selectedEndpoint, setSelectedEndpoint] = useState('');
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
+  const [selectedTable, setSelectedTable] = useState(''); // Selected table name
+  const [result, setResult] = useState(null); // Result data to display
+  const [error, setError] = useState(null); // Error messages
 
-  // Fetch available endpoints from backend
-  useEffect(() => {
-    axios.get('http://localhost:5000/admin/endpoints') // Call the backend to get available actions
-      .then(response => {
-        setEndpoints(response.data); // Store available actions from backend
-      })
-      .catch(err => {
-        setError('Failed to load available actions');
-        console.error(err);
-      });
-  }, []);
+  // Hardcoded table names and their respective routes
+  const tableRoutes = {
+    user: '/users',
+    amenity: '/amenities',
+    host: '/hosts',
+    guest: '/guests',
+    property: '/properties',
+    location: '/locations',
+    calendaravailability: '/calendar',
+    booking: '/bookings',
+    payment: '/payments',
+    propertyamenity: '/property-amenities',
+    review: '/reviews',
+    supportticket: '/support-tickets',
+    identityverification: '/identity-verifications',
+  };
 
-  const handleEndpointChange = (event) => {
-    setSelectedEndpoint(event.target.value);
+  const handleTableChange = (event) => {
+    setSelectedTable(event.target.value); // Set the selected table name
+    setResult(null); // Clear previous results
+    setError(null); // Clear errors
   };
 
   const handleFetchData = async () => {
+    if (!selectedTable) {
+      setError('Please select a table');
+      return;
+    }
+
+    const endpoint = tableRoutes[selectedTable]; // Get the corresponding route
+    if (!endpoint) {
+      setError('Invalid table selected');
+      return;
+    }
+
     try {
-      if (!selectedEndpoint) return; // Prevent empty fetch
-
-      let response;
-      if (selectedEndpoint === 'getAllUsers') {
-        response = await axios.get('http://localhost:5000/users');
-      } else if (selectedEndpoint === 'getUserById') {
-        const userId = prompt("Enter User ID:");  // Prompt to get User ID
-        response = await axios.get(`http://localhost:5000/users/${userId}`);
-      } else {
-        setError('Invalid endpoint');
-        return;
-      }
-
-      setResult(response.data); // Store the result
       setError(null);
+      const response = await axios.get(`http://localhost:5000${endpoint}`); // Fetch data from the backend
+      setResult(response.data || []);
     } catch (err) {
       setError('Failed to fetch data');
       console.error(err);
@@ -48,32 +53,56 @@ function Admin() {
   };
 
   return (
-    <div>
+    <div className="admin-panel">
       <h1>Admin Panel</h1>
 
-      {/* Dropdown to select the action (endpoint) */}
-      <div>
-        <label>Select Action:</label>
-        <select onChange={handleEndpointChange}>
-          <option value="">--Select Action--</option>
-          {endpoints.map((endpoint, index) => (
-            <option key={index} value={endpoint}>
-              {endpoint}
+      {/* Dropdown to select a table */}
+      <div className="dropdown">
+        <label>Select Table:</label>
+        <select onChange={handleTableChange} value={selectedTable}>
+          <option value="">--Select Table--</option>
+          {Object.keys(tableRoutes).map((table, index) => (
+            <option key={index} value={table}>
+              {table}
             </option>
           ))}
         </select>
       </div>
 
-      <button onClick={handleFetchData}>Fetch Data</button>
+      {/* Button to fetch data */}
+      <button className="fetch-button" onClick={handleFetchData}>
+        Fetch Data
+      </button>
 
       {/* Display error message */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {/* Display the results */}
       {result && (
-        <div>
-          <h2>Results:</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
+        <div className="results">
+          <h2>Results for Table: {selectedTable}</h2>
+          {Array.isArray(result) && result.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  {Object.keys(result[0] || {}).map((key, index) => (
+                    <th key={index}>{key}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {result.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Object.values(row).map((value, cellIndex) => (
+                      <td key={cellIndex}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No data available</p>
+          )}
         </div>
       )}
     </div>

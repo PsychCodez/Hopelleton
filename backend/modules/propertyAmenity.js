@@ -22,12 +22,12 @@ db.query(propertyAmenityTable, (err, result) => {
 
 
 module.exports = {
-    createPropertyAmenity: (propertyId, amenityId, callback) => {
+    createPropertyAmenity: (propAmenData, callback) => {
         const query = `
             INSERT INTO PropertyAmenity (PropertyID, AmenityID) 
             VALUES (?, ?)
         `;
-        db.query(query, [propertyId, amenityId], callback);
+        db.query(query, [propAmenData.propertyId, propAmenData.amenityId], callback);
     },
 
     findPropertyAmenityById: (propertyAmenityId, callback) => {

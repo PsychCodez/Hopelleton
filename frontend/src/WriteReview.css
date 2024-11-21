@@ -1,0 +1,57 @@
+.write-review {
+    color: black;
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: white; /* Add white background */
+    border: 1px solid #ccc;  /* Add border for clarity */
+    border-radius: 10px;     /* Rounded corners for a modern look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    padding: 20px;          /* Add internal spacing */
+  }
+  
+  .write-review h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333; /* Slightly darker color for better visibility */
+  }
+  
+  .write-review .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .write-review .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .write-review .form-group input,
+  .write-review .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Light background for inputs */
+  }
+  
+  .write-review .form-group textarea {
+    resize: vertical; /* Allow resizing only vertically */
+  }
+  
+  .write-review .submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .write-review .submit-button:hover {
+    background-color: #0056b3;
+  }
+  

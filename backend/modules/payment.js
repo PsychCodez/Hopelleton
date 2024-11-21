@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Payment (
     PaymentStatus VARCHAR(50));
 `;
 
-const updateReferences1 = `ALTER TABLE Booking ADD FOREIGN KEY (PaymentID) REFERENCES Payment(PaymentID);`;
+// const updateReferences1 = `ALTER TABLE Booking ADD FOREIGN KEY (PaymentID) REFERENCES Payment(PaymentID);`;
 const updateReferences2 = `ALTER TABLE Payment ADD FOREIGN KEY (BookingID) REFERENCES Booking(BookingID);`;
 
 db.query(paymentTable, (err, result) => {
@@ -21,13 +21,13 @@ db.query(paymentTable, (err, result) => {
         console.log('Payment table created or already exists.');
     }
 });
-db.query(updateReferences1, (err, result) => {
-    if (err) {
-        console.error('Error updating Booking Referenes:', err);
-    } else {
-        console.log('updating Booking Referenes sucess.');
-    }
-});
+// db.query(updateReferences1, (err, result) => {
+//     if (err) {
+//         console.error('Error updating Booking Referenes:', err);
+//     } else {
+//         console.log('updating Booking Referenes sucess.');
+//     }
+// });
 db.query(updateReferences2, (err, result) => {
     if (err) {
         console.error('Error creating Payment References:', err);
@@ -38,12 +38,12 @@ db.query(updateReferences2, (err, result) => {
 
 
 module.exports = {
-    createPayment: (bookingId, paymentMethod, transactionId, paymentAmount, paymentDate, paymentStatus, callback) => {
+    createPayment: (paymentData, callback) => {
         const query = `
             INSERT INTO Payment (BookingID, PaymentMethod, TransactionID, PaymentAmount, PaymentDate, PaymentStatus) 
             VALUES (?, ?, ?, ?, ?, ?)
         `;
-        db.query(query, [bookingId, paymentMethod, transactionId, paymentAmount, paymentDate, paymentStatus], callback);
+        db.query(query, [paymentData.bookingId, paymentData.paymentMethod, paymentData.transactionId, paymentData.paymentAmount, paymentData.paymentDate, paymentData.paymentStatus], callback);
     },
 
     findPaymentById: (paymentId, callback) => {
@@ -51,13 +51,13 @@ module.exports = {
         db.query(query, [paymentId], callback);
     },
 
-    updatePayment: (paymentId, paymentStatus, callback) => {
+    updatePayment: (paymentData, callback) => {
         const query = `
             UPDATE Payment 
             SET PaymentStatus = ? 
             WHERE PaymentID = ?
         `;
-        db.query(query, [paymentStatus, paymentId], callback);
+        db.query(query, [paymentData.paymentStatus, paymentData.paymentId], callback);
     },
 
     deletePayment: (paymentId, callback) => {

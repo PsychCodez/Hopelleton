@@ -11,7 +11,6 @@ const createBookingTable = `
     CheckOutDate DATE,
     TotalCost DECIMAL(10, 2),
     BookingStatus VARCHAR(50),
-    PaymentID INT,
     CreatedDate DATE,
     UpdatedDate DATE
 );
@@ -29,12 +28,12 @@ db.query(createBookingTable, (err, result) => {
 
 module.exports = {
     // Create a booking
-    createBooking: (userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate, callback) => {
+    createBooking: (bookingData, callback) => {
         const query = `
-            INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, PaymentID, CreatedDate, UpdatedDate) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO Booking (UserID, PropertyID, CheckInDate, CheckOutDate, TotalCost, BookingStatus, CreatedDate, UpdatedDate) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const values = [userId, propertyId, checkInDate, checkOutDate, totalCost, bookingStatus, paymentId, createdDate, updatedDate];
+        const values = [bookingData.userId, bookingData.propertyId, bookingData.checkInDate, bookingData.checkOutDate, bookingData.totalCost, bookingData.bookingStatus, bookingData.createdDate, bookingData.updatedDate];
         db.query(query, values, callback);
     },
 
@@ -45,13 +44,13 @@ module.exports = {
     },
 
     // Update a booking
-    updateBooking: (bookingId, checkInDate, checkOutDate, totalCost, bookingStatus, updatedDate, callback) => {
+    updateBooking: (bookingData, callback) => {
         const query = `
             UPDATE Booking 
             SET CheckInDate = ?, CheckOutDate = ?, TotalCost = ?, BookingStatus = ?, UpdatedDate = ? 
             WHERE BookingID = ?
         `;
-        const values = [checkInDate, checkOutDate, totalCost, bookingStatus, updatedDate, bookingId];
+        const values = [bookingData.checkInDate, bookingData.checkOutDate, bookingData.totalCost, bookingData.bookingStatus, bookingData.updatedDate, bookingData.bookingId];
         db.query(query, values, callback);
     },
 

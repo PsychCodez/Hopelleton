@@ -24,12 +24,12 @@ db.query(guestTable, (err, result) => {
 
 
 module.exports = {
-    createGuest: (userId, guestRating, numberOfBookings, callback) => {
+    createGuest: (guestData, callback) => {
         const query = `
             INSERT INTO Guest (UserID, GuestRating, NumberOfBookings) 
             VALUES (?, ?, ?)
         `;
-        db.query(query, [userId, guestRating, numberOfBookings], callback);
+        db.query(query, [guestData.userId, guestData.guestRating, guestData.numberOfBookings], callback);
     },
 
     findGuestById: (guestId, callback) => {
@@ -37,13 +37,13 @@ module.exports = {
         db.query(query, [guestId], callback);
     },
 
-    updateGuest: (guestId, guestRating, numberOfBookings, callback) => {
+    updateGuest: (guestData, callback) => {
         const query = `
             UPDATE Guest 
             SET GuestRating = ?, NumberOfBookings = ? 
             WHERE GuestID = ?
         `;
-        db.query(query, [guestRating, numberOfBookings, guestId], callback);
+        db.query(query, [guestData.guestRating, guestData.numberOfBookings, guestData.guestId], callback);
     },
 
     deleteGuest: (guestId, callback) => {

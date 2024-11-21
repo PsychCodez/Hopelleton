@@ -139,7 +139,6 @@ router.get('/properties/:hostId', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { phoneNumber, password } = req.body;
-
   // Validate that both phoneNumber and password are provided
   if (!phoneNumber || !password) {
     return res.status(400).json({ error: 'Missing required fields: phoneNumber and password' });
@@ -148,7 +147,7 @@ router.post('/login', (req, res) => {
   // SQL query to check if the user exists and verify the password
   const query = `
     SELECT 
-        Name, Password, PhoneNumber
+        UserId, Name, Password, PhoneNumber
     FROM 
         User
     WHERE 
@@ -177,9 +176,26 @@ router.post('/login', (req, res) => {
     }
 
     // Create a session or state for the user
-    return res.status(200).json({ message: 'Login successful', username: user.Username });
+    return res.status(200).json({ "message": 'Login successful', "username": user.Name, "userid" : user.UserId });
   });
 });
 
+router.post('/cancellation', (req, res) => {
+  const { bookingId } = req.body; // Use `req.body` for POST payload
 
+  if (!bookingId) {
+    return res.status(400).json({ error: 'Missing required parameter: bookingId' });
+  }
+
+  const query = `CALL CancelBooking(?);`; // Use parameterized query for security
+
+  db.query(query, [bookingId], (error, results) => {
+    if (error) {
+      console.error('Error cancelling booking:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    return res.status(200).json({ message: 'Booking cancelled successfully.' });
+  });
+});
 module.exports = router;

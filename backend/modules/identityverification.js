@@ -22,12 +22,12 @@ db.query(idVerificationTable, (err, result) => {
 });
 
 module.exports = {
-    createVerification: (userId, documentType, documentNumber, verificationDate, verificationStatus, callback) => {
+    createVerification: (verData, callback) => {
         const query = `
             INSERT INTO IdentityVerification (UserID, DocumentType, DocumentNumber, VerificationDate, VerificationStatus) 
             VALUES (?, ?, ?, ?, ?)
         `;
-        db.query(query, [userId, documentType, documentNumber, verificationDate, verificationStatus], callback);
+        db.query(query, [verData.userId, verData.documentType, verData.documentNumber, verData.verificationDate, verData.verificationStatus], callback);
     },
 
     findVerificationById: (verificationId, callback) => {
@@ -35,13 +35,13 @@ module.exports = {
         db.query(query, [verificationId], callback);
     },
 
-    updateVerification: (verificationId, documentType, documentNumber, verificationDate, verificationStatus, callback) => {
+    updateVerification: (verData, callback) => {
         const query = `
             UPDATE IdentityVerification 
             SET DocumentType = ?, DocumentNumber = ?, VerificationDate = ?, VerificationStatus = ? 
             WHERE VerificationID = ?
         `;
-        db.query(query, [documentType, documentNumber, verificationDate, verificationStatus, verificationId], callback);
+        db.query(query, [verData.documentType, verData.documentNumber, verData.verificationDate, verData.verificationStatus, verData.verificationId], callback);
     },
 
     deleteVerification: (verificationId, callback) => {

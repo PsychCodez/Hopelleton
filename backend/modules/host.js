@@ -22,12 +22,12 @@ db.query(hostTable, (err, result) => {
 });
 
 module.exports = {
-    createHost: (userId, verificationStatus, hostRating, numberOfProperties, callback) => {
+    createHost: (hostData, callback) => {
         const query = `
             INSERT INTO Host (UserID, VerificationStatus, HostRating, NumberOfProperties) 
             VALUES (?, ?, ?, ?)
         `;
-        db.query(query, [userId, verificationStatus, hostRating, numberOfProperties], callback);
+        db.query(query, [hostData.userId, hostData.verificationStatus, hostData.hostRating, hostData.numberOfProperties], callback);
     },
 
     findHostById: (hostId, callback) => {
@@ -35,13 +35,13 @@ module.exports = {
         db.query(query, [hostId], callback);
     },
 
-    updateHost: (hostId, verificationStatus, hostRating, numberOfProperties, callback) => {
+    updateHost: (hostData, callback) => {
         const query = `
             UPDATE Host 
             SET VerificationStatus = ?, HostRating = ?, NumberOfProperties = ? 
             WHERE HostID = ?
         `;
-        db.query(query, [verificationStatus, hostRating, numberOfProperties, hostId], callback);
+        db.query(query, [hostData.verificationStatus, hostData.hostRating, hostData.numberOfProperties, hostData.hostId], callback);
     },
 
     deleteHost: (hostId, callback) => {

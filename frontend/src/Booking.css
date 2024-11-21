@@ -1,0 +1,160 @@
+/* Booking Page Container */
+.booking-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header */
+  .booking-page h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Search Bar Styling */
+  .search-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .search-bar-item {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .search-bar-item:last-child {
+    margin-right: 0;
+  }
+  
+  .search-bar-item label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .search-bar-item input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-bar-item input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .separator {
+    height: 30px;
+    border-left: 1px solid #ccc;
+    margin: 0 10px;
+  }
+  
+  /* Booking Details */
+  .booking-details {
+    color: black;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .booking-details h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .booking-details p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .booking-details .cancel-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+  }
+  
+  .booking-details .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Responsive Design for Mobile */
+  @media (max-width: 768px) {
+    .search-bar {
+      flex-direction: column;
+    }
+  
+    .search-bar-item {
+      margin-bottom: 10px;
+    }
+  
+    .separator {
+      display: none;
+    }
+  
+    .book-button {
+      width: 100%;
+      max-width: none;
+    }
+  }
+/* Confirm Booking Button */
+.confirm-button {
+    padding: 14px 28px;
+    background-color: #28a745; /* Green color */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto;
+    text-align: center;
+    display: block;
+}
+
+/* Hover Effect */
+.confirm-button:hover {
+    background-color: #218838; /* Darker green */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Active State */
+.confirm-button:active {
+    background-color: #1e7e34; /* Darkest green */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Smaller shadow */
+    transform: translateY(1px); /* Slight press effect */
+}
+
+/* Disabled State */
+.confirm-button:disabled {
+    background-color: #cccccc; /* Light gray */
+    color: #666666; /* Dark gray */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
