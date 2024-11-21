@@ -198,4 +198,23 @@ router.post('/cancellation', (req, res) => {
     return res.status(200).json({ message: 'Booking cancelled successfully.' });
   });
 });
+
+router.get('/bookings/maxid', (req, res) => {
+  
+    const query = `SELECT MAX(BookingID) FROM Booking;`; // Use parameterized query for security
+  
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error('Error fetching properties:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    const id = results[0];
+    if (results && results.length > 0) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(404).json({ message: 'No properties found for the given host.' , "BookingID":id.BookingID });
+    }
+  });
+});
+
 module.exports = router;
