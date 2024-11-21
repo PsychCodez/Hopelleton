@@ -23,7 +23,7 @@ function Carousel({ properties }) {
   return (
     <div className="carousel-wrapper">
       <button onClick={scrollLeft} className="carousel-button prev">❮</button>
-      <div className="carousel" style={{ transform: 'translateX(-${scrollPosition}px)'}}>
+      <div className="carousel" style={{ transform: `translateX(-${scrollPosition}px)`}}>
         {properties.map((property, index) => (
           <div key={index} className="carousel-item">
             <div className="property-image">{property.image}</div>
@@ -162,7 +162,7 @@ function App() {
             <Link to="/about">About</Link>
             <Link to="/">Renters</Link>
             <Link to="/landlords">Landlords</Link>
-            <Link to="/admin">Admin</Link>
+            {/* <Link to="/admin">Admin</Link> */}
             <Link to="/writereview">Write a Review</Link>
           </div>
           {username ? (
