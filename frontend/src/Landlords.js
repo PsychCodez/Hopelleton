@@ -1,63 +1,94 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Landlords.css";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
 
 function Landlords() {
+  const [addedProperties, setAddedProperties] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAddPropertyForm, setShowAddPropertyForm] = useState(false); // State to control Add Property Form visibility
   const [propertyDetails, setPropertyDetails] = useState({
     title: "",
     address: "",
     city: "",
-    price: 5000, // Default starting value for slider
+    price: 5000,
     propertyType: "Apartment",
     description: "",
+    maxGuests: 2,
+    rules: "",
+    averageRating: 0,
   });
-  const [addedProperties, setAddedProperties] = useState([]);
-  const [showAddPropertyForm, setShowAddPropertyForm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [charCount, setCharCount] = useState(0);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPropertyDetails({ ...propertyDetails, [name]: value });
-    if (name === "description") {
-      setCharCount(value.length);
+  useEffect(() => {
+    // Initial properties (or fetch from backend if needed)
+    setAddedProperties([
+      { id: 1, title: "Villa in Jalahalli", address: "123 Main St", city: "Bangalore", price: "₹5000/night", propertyType: "Villa" },
+      { id: 2, title: "Apartment in Whitefield", address: "456 Elm St", city: "Bangalore", price: "₹3500/night", propertyType: "Apartment" },
+    ]);
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/properties/${id}`); // Replace with your backend's base URL
+      const updatedProperties = addedProperties.filter((property) => property.id !== id);
+      setAddedProperties(updatedProperties);
+      alert("Property deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting property:", error);
+      alert("Failed to delete the property. Please try again.");
     }
   };
 
-  const handleSliderChange = (e) => {
-    setPropertyDetails({ ...propertyDetails, price: e.target.value });
-  };
-
-  const handleAddProperty = (e) => {
+  const handleAddProperty = async (e) => {
     e.preventDefault();
-    setAddedProperties([...addedProperties, propertyDetails]);
-    setPropertyDetails({
-      title: "",
-      address: "",
-      city: "",
-      price: 5000,
-      propertyType: "Apartment",
-      description: "",
-    });
-    setCharCount(0);
-    setShowAddPropertyForm(false); // Close form after adding
+    const newPropertyData = {
+      hostId: 1, // Assume a fixed hostId for now, modify as needed
+      title: propertyDetails.title,
+      description: propertyDetails.description,
+      AverageRating: propertyDetails.averageRating,
+      maxGuests: propertyDetails.maxGuests,
+      pricePerNight: propertyDetails.price,
+      rules: propertyDetails.rules,
+      createdDate: new Date().toISOString(),
+      updatedDate: new Date().toISOString(),
+    };
+    console.log(newPropertyData)
+
+    try {
+      // POST request to the backend to create a new property
+      const response = await axios.post("http://localhost:5000/properties", newPropertyData);
+
+      // Add the newly created property to the list in state (assuming response contains the new property)
+      const createdProperty = {
+        id: response.data.insertId, // assuming the backend returns the inserted ID
+        title: propertyDetails.title,
+        address: propertyDetails.address,
+        city: propertyDetails.city,
+        price: `₹${propertyDetails.price}/night`,
+        propertyType: propertyDetails.propertyType,
+      };
+
+      setAddedProperties([...addedProperties, createdProperty]);
+      setShowAddPropertyForm(false); // Hide the form
+      alert("Property created successfully!");
+      
+      // Reset the form fields
+      setPropertyDetails({
+        title: "",
+        address: "",
+        city: "",
+        price: 5000,
+        propertyType: "Apartment",
+        description: "",
+        maxGuests: 2,
+        rules: "",
+        averageRating: 0,
+      });
+    } catch (error) {
+      console.error("Error creating property:", error);
+      alert("Failed to create the property. Please try again.");
+    }
   };
-
-  const openModal = (property) => {
-    setSelectedProperty(property);
-    setShowModal(true);
-  };
-
-  const closeModal = () => setShowModal(false);
-
-  useEffect(() => {
-    setAddedProperties([
-      { title: "Villa in Jalahalli", address: "123 Main St", price: "₹5000/night", propertyType: "Villa" },
-      { title: "Apartment in Whitefield", address: "456 Elm St", price: "₹3500/night", propertyType: "Apartment" },
-    ]);
-  }, []);
 
   const filteredProperties = addedProperties.filter((property) =>
     property.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -67,7 +98,7 @@ function Landlords() {
     <div className="landlords-page">
       <h1>Landlord's Portal</h1>
 
-      {/* Search and Add Property Icon */}
+      {/* Search Bar */}
       <div className="search-bar-land">
         <input
           type="text"
@@ -78,18 +109,17 @@ function Landlords() {
         <FaPlus className="add-property-icon" onClick={() => setShowAddPropertyForm(true)} />
       </div>
 
-      {/* Add Property Form (Hidden initially) */}
+      {/* Add Property Form */}
       {showAddPropertyForm && (
         <div className="add-property-form">
           <h2>Add New Property</h2>
           <form onSubmit={handleAddProperty}>
             <div className="form-group">
-              <label>Property Title</label>
+              <label>Title</label>
               <input
                 type="text"
-                name="title"
                 value={propertyDetails.title}
-                onChange={handleChange}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, title: e.target.value })}
                 placeholder="Enter property title"
                 required
               />
@@ -98,9 +128,8 @@ function Landlords() {
               <label>Address</label>
               <input
                 type="text"
-                name="address"
                 value={propertyDetails.address}
-                onChange={handleChange}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, address: e.target.value })}
                 placeholder="Enter address"
                 required
               />
@@ -109,9 +138,8 @@ function Landlords() {
               <label>City</label>
               <input
                 type="text"
-                name="city"
                 value={propertyDetails.city}
-                onChange={handleChange}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, city: e.target.value })}
                 placeholder="Enter city"
                 required
               />
@@ -120,32 +148,49 @@ function Landlords() {
               <label>Price per night (₹): {propertyDetails.price}</label>
               <input
                 type="range"
-                name="price"
+                value={propertyDetails.price}
                 min="500"
                 max="20000"
                 step="500"
-                value={propertyDetails.price}
-                onChange={handleSliderChange}
-                className="price-slider"
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, price: e.target.value })}
               />
             </div>
             <div className="form-group">
               <label>Property Type</label>
-              <select name="propertyType" value={propertyDetails.propertyType} onChange={handleChange}>
+              <select
+                value={propertyDetails.propertyType}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, propertyType: e.target.value })}
+              >
                 <option value="Apartment">Apartment</option>
                 <option value="Villa">Villa</option>
                 <option value="House">House</option>
               </select>
             </div>
             <div className="form-group">
-              <label>Description <span className="char-count">({charCount}/200)</span></label>
+              <label>Description</label>
               <textarea
-                name="description"
-                maxLength="200"
                 value={propertyDetails.description}
-                onChange={handleChange}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, description: e.target.value })}
                 placeholder="Describe the property"
                 required
+              />
+            </div>
+            <div className="form-group">
+              <label>Max Guests</label>
+              <input
+                type="number"
+                value={propertyDetails.maxGuests}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, maxGuests: e.target.value })}
+                placeholder="Max number of guests"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Rules</label>
+              <textarea
+                value={propertyDetails.rules}
+                onChange={(e) => setPropertyDetails({ ...propertyDetails, rules: e.target.value })}
+                placeholder="Property rules"
               />
             </div>
             <button type="submit" className="add-property-button">Add Property</button>
@@ -153,34 +198,29 @@ function Landlords() {
         </div>
       )}
 
-      {/* List of Previously Added Properties */}
+      {/* List of Properties */}
       <div className="property-list">
         <h2>Your Added Properties</h2>
         <ul>
-          {filteredProperties.map((property, index) => (
-            <li key={index} className="property-item" onClick={() => openModal(property)}>
-              <h3>{property.title}</h3>
-              <p>{property.address}, {property.city}</p>
-              <p>Type: {property.propertyType}</p>
-              <p>Price: {property.price}</p>
+          {filteredProperties.map((property) => (
+            <li key={property.id} className="property-item">
+              <div>
+                <h3>{property.title}</h3>
+                <p>{property.address}, {property.city}</p>
+                <p>Type: {property.propertyType}</p>
+                <p>Price: {property.price}</p>
+              </div>
+              <button
+                className="creative-delete-button"
+                onClick={() => handleDelete(property.id)}
+              >
+                <FaTrash className="delete-icon" />
+                <span className="delete-text">Remove</span>
+              </button>
             </li>
           ))}
         </ul>
       </div>
-
-      {/* Modal for Property Details */}
-      {showModal && selectedProperty && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <h3>{selectedProperty.title}</h3>
-            <p>Address: {selectedProperty.address}, {selectedProperty.city}</p>
-            <p>Type: {selectedProperty.propertyType}</p>
-            <p>Price: {selectedProperty.price}</p>
-            <p>Description: {selectedProperty.description}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
