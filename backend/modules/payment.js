@@ -21,13 +21,13 @@ db.query(paymentTable, (err, result) => {
         console.log('Payment table created or already exists.');
     }
 });
-db.query(updateReferences1, (err, result) => {
-    if (err) {
-        console.error('Error updating Booking Referenes:', err);
-    } else {
-        console.log('updating Booking Referenes sucess.');
-    }
-});
+// db.query(updateReferences1, (err, result) => {
+//     if (err) {
+//         console.error('Error updating Booking Referenes:', err);
+//     } else {
+//         console.log('updating Booking Referenes sucess.');
+//     }
+// });
 db.query(updateReferences2, (err, result) => {
     if (err) {
         console.error('Error creating Payment References:', err);
