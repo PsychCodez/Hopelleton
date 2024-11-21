@@ -3,9 +3,9 @@ const reviewModule = require('../modules/review.js');
 
 module.exports = {
     createReview: (req, res) => {
-        const userData = req.body;  // Data sent in the request body
+        const reviewData = req.body;  // Data sent in the request body
         
-        review.createReview(userData, (error, result) => {
+        reviewModule.createReview(reviewData, (error, result) => {
             if (error) {
                 console.error('Error creating Review:', error);
                 return res.status(500).json({ error: error.message });

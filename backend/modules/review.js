@@ -24,10 +24,10 @@ db.query(reviewTable, (err, result) => {
 module.exports = {
     createReview: (reviewData, callback) => {
         const query = `
-            INSERT INTO Review (BookingID, UserID, Rating, Comment, ReviewDate) 
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO Review (BookingID, UserID, PropertyID, Rating, Comment, ReviewDate) 
+            VALUES (?, ?, ?, ?, ?, ?)
         `;
-        db.query(query, [reviewData.bookingId, reviewData.userId, reviewData.rating, reviewData.comment, reviewData.reviewDate], callback);
+        db.query(query, [reviewData.bookingId, reviewData.userId, reviewData.propertyId, reviewData.rating, reviewData.comment, reviewData.reviewDate], callback);
     },
 
     findReviewById: (reviewId, callback) => {
