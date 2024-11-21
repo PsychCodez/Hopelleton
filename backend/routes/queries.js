@@ -199,9 +199,9 @@ router.post('/cancellation', (req, res) => {
   });
 });
 
-router.get('/bookings/maxid', (req, res) => {
+router.get('/book/ma', (req, res) => {
   
-    const query = `SELECT MAX(BookingID) FROM Booking;`; // Use parameterized query for security
+    const query = `SELECT MAX(BookingID) AS maxid FROM Booking;`; // Use parameterized query for security
   
   db.query(query, (error, results) => {
     if (error) {
@@ -209,10 +209,11 @@ router.get('/bookings/maxid', (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
     const id = results[0];
+    console.log(results)
     if (results && results.length > 0) {
-      return res.status(200).json(results);
+      return res.status(200).json( {"BookingID":id.maxid});
     } else {
-      return res.status(404).json({ message: 'No properties found for the given host.' , "BookingID":id.BookingID });
+      return res.status(404).json({ "message": 'No bsdfd found for the given host.'});
     }
   });
 });
