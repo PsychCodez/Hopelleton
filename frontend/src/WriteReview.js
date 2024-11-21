@@ -5,6 +5,7 @@ import "./WriteReview.css"; // Optional: Add styling if needed
 function WriteReview() {
   const [bookingId, setBookingId] = useState("");
   const [userId, setUserId] = useState("");
+  const [propertyId, setPropertyId] = useState("");
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const [reviewDate, setReviewDate] = useState(new Date().toISOString().slice(0, 10));
@@ -15,6 +16,7 @@ function WriteReview() {
 
     const reviewPayload = {
       bookingId: parseInt(bookingId, 10),
+      propertyId: parseInt(propertyId, 10),
       userId: parseInt(userId, 10),
       rating: parseFloat(rating),
       comment,
@@ -23,7 +25,7 @@ function WriteReview() {
 
     try {
       const response = await axios.post("http://localhost:5000/reviews", reviewPayload);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Review submitted successfully!");
       } else {
         // Show specific error message if the backend provides one
@@ -67,6 +69,15 @@ function WriteReview() {
             id="userId"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
+            required
+          />
+        </div><div className="form-group">
+          <label htmlFor="propertyId">Property ID:</label>
+          <input
+            type="number"
+            id="propertyId"
+            value={propertyId}
+            onChange={(e) => setPropertyId(e.target.value)}
             required
           />
         </div>

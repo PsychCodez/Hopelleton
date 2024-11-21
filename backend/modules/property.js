@@ -51,7 +51,7 @@ module.exports = {
     },
     
     getAllProperties : (callback) => {
-        const query = `SELECT * FROM Properties`;
+        const query = `SELECT * FROM Property`;
         db.query(query, callback);
     }
 };
